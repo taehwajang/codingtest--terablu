@@ -1,38 +1,13 @@
-<p align="center"><img src="https://i.imgur.com/flcMvDC.png"></p>
 
-## Usage
+### 사용 기술
 
-### Create an App
+- TypeScript, react, nextron.js, firebase, git
 
-```
-# with npx
-$ npx create-nextron-app my-app --example with-typescript-material-ui
+### 기능
 
-# with yarn
-$ yarn create nextron-app my-app --example with-typescript-material-ui
+- [ ]  회원가입
+- [ ]  로그인
+- [ ]  유저목록
+- [ ]  1 : 1 채팅
+- [ ]  그룹채팅
 
-# with pnpx
-$ pnpx create-nextron-app my-app --example with-typescript-material-ui
-```
-
-### Install Dependencies
-
-```
-$ cd my-app
-
-# using yarn or npm
-$ yarn (or `npm install`)
-
-# using pnpm
-$ pnpm install --shamefully-hoist
-```
-
-### Use it
-
-```
-# development mode
-$ yarn dev (or `npm run dev` or `pnpm run dev`)
-
-# production build
-$ yarn build (or `npm run build` or `pnpm run build`)
-```

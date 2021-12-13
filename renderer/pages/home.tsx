@@ -1,4 +1,5 @@
 import React,{ useRef, useState } from 'react';
+import Profile from './Profile';
 import Head from 'next/head';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -67,17 +68,19 @@ function Home() {
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <div>
-              <input ref ={emailRef} type="text" placeholder="Email"/>
-              <input ref ={passwordRef} type="password" placeholder="password"/>
+              { 
+              !currentUser && <>
+              Email:<input ref ={emailRef} type="text" placeholder="Email"/><br/>
+              Password:<input ref ={passwordRef} type="password" placeholder="password"/><br/>
               <Button disabled={ loading || currentUser != null } onClick={handleSignup}>Sign Up</Button>
               <Button disabled={ loading || currentUser != null } onClick={handleLogin}>Log In</Button>
-              <Button disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button>
               <Button variant="contained" color="secondary" onClick={handleClick}>
                 로그인
               </Button>
               <Button variant="contained"  onClick={handleClick}><Link href="/next">회원가입하러가기</Link></Button>
-              </div>
+              </>
+              }
+
               </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -110,9 +113,12 @@ function Home() {
               Git
             </li>
           </ul>
+          
+          {currentUser != undefined ? currentUser.email :null}
         </Typography>
-        
-        <img src="/images/jangtaehwa.jpg"  style={{width: "200px", height: "100%", borderRadius: "15px"}}/>
+        { currentUser && <><Profile /><Button disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button></>}
+
+        {/* <img src="/images/jangtaehwa.jpg"  style={{width: "200px", height: "100%", borderRadius: "15px"}}/> */}
         <Typography gutterBottom>
           <Link href="/next">회원가입하러가기</Link>
         </Typography>

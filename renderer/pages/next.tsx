@@ -33,7 +33,6 @@ function Next() {
           E-mail: <input/>
           <br/>
           PassWord: <input type="password"/>
-
           </form>
         </Typography>
         <Typography gutterBottom>

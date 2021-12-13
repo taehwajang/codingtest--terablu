@@ -9,7 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Typography from '@material-ui/core/Typography';
 import Link from '../components/Link';
-import { signup, useAuth} from "./firebase";
+import { signup, login, logout, useAuth} from "./firebase";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -28,7 +28,6 @@ function Home() {
   const currentUser = useAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
-  console.log(currentUser, '????');
   async function handleSignup(){
     setLoading(true);
     try{
@@ -38,7 +37,24 @@ function Home() {
   }
   setLoading(false);
 }
-
+  async function handleLogin(){
+    setLoading(true);
+    try{
+    await login(emailRef.current.value, passwordRef.current.value);
+  } catch{
+    alert("error!");
+  }
+  setLoading(false);
+  }
+  async function handleLogout() {
+    setLoading(true);
+    try{
+      await logout();
+    } catch{
+      alert("error!");
+    }
+    setLoading(false);
+  }
   return (
     <React.Fragment>
       <Head>
@@ -55,7 +71,8 @@ function Home() {
               <input ref ={emailRef} type="text" placeholder="Email"/>
               <input ref ={passwordRef} type="password" placeholder="password"/>
               <Button disabled={ loading || currentUser != null } onClick={handleSignup}>Sign Up</Button>
-              {/* <Button onClick={handleLogout}>Log Out</Button> */}
+              <Button disabled={ loading || currentUser != null } onClick={handleLogin}>Log In</Button>
+              <Button disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button>
               <Button variant="contained" color="secondary" onClick={handleClick}>
                 로그인
               </Button>

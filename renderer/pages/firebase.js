@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBggmbr1rYd-2wO0gSKqFxg9QX5eOv5Big",
@@ -20,6 +20,12 @@ const auth = getAuth();
 
 export function signup(email, password){
   return createUserWithEmailAndPassword(auth, email, password)
+}
+export function login(email, password){
+  return signInWithEmailAndPassword(auth, email, password)
+}
+export function logout(){
+  return signOut(auth);
 }
 export function useAuth(){
   const [currentUser, setCurrentUser] = useState();

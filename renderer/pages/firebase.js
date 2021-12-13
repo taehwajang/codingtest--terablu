@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react"
-// Import the functions you need from the SDKs you need
+
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
-// Your web app's Firebase configuration
+import { getStorage, ref, uploadBytes} from "firebase/storage"
+
 const firebaseConfig = {
   apiKey: "AIzaSyBggmbr1rYd-2wO0gSKqFxg9QX5eOv5Big",
   authDomain: "project-test-7af73.firebaseapp.com",
@@ -14,9 +13,9 @@ const firebaseConfig = {
   appId: "1:831204101439:web:8705c0b06ae0a4dc4cd78a"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const storage = getStorage();
 
 export function signup(email, password){
   return createUserWithEmailAndPassword(auth, email, password)
@@ -35,4 +34,14 @@ export function useAuth(){
    return unsub;
   }, [])
   return currentUser;
+}
+export async function upload(file, currentUser, setLoading){
+  const fileRef = ref(storage, currentUser.uid + "png");
+
+  setLoading(true);
+
+  const snapshot= await uploadBytes(fileRef, file);
+
+  setLoading(false);
+  alert("uploaded file!");
 }

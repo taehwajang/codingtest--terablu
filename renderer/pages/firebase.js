@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
-import { getStorage, ref, uploadBytes} from "firebase/storage"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBggmbr1rYd-2wO0gSKqFxg9QX5eOv5Big",
@@ -36,12 +36,17 @@ export function useAuth(){
   return currentUser;
 }
 export async function upload(file, currentUser, setLoading){
-  const fileRef = ref(storage, currentUser.uid + "png");
+  const fileRef = ref(storage, currentUser.uid + '.png');
 
   setLoading(true);
 
   const snapshot= await uploadBytes(fileRef, file);
 
+  const photoURL = await getDownloadURL(fileRef);
+  updateProfile(currentUser, {photoURL});
+
   setLoading(false);
   alert("uploaded file!");
 }
+
+

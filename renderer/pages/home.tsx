@@ -1,7 +1,7 @@
 import React,{ useRef, useState } from 'react';
 import Profile from './Profile';
 import { signup, login, logout, useAuth } from "./firebase";
-
+import Chatting from "./chatting"
 import Head from 'next/head';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -67,7 +67,8 @@ function Home() {
       <div className={classes.root}>
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>LOGIN
-            {currentUser != undefined ? <div>Currently logged in as : {currentUser.email}</div> : null}
+            {currentUser != undefined ? <div>Currently logged in as : {currentUser.email}
+            <Button variant="contained" color="secondary" disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button></div> : null}
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -77,10 +78,9 @@ function Home() {
               Password:<input ref ={passwordRef} type="password" placeholder="Password"/><br/>
               <Button disabled={ loading  } onClick={handleSignup}>Sign Up</Button>
               <Button disabled={ loading  } onClick={handleLogin}>Log In</Button>
-              <Button variant="contained" color="secondary" onClick={handleClick}>
-                로그인
-              </Button>
+              <div>
               <Button variant="contained"  onClick={handleClick}><Link href="/next">회원가입하러가기</Link></Button>
+              </div>
               </>
               }
 
@@ -96,10 +96,10 @@ function Home() {
           <b>Coding Test</b>
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
-          <ul style={{ listStyle: "none" }}>
-          <b style ={{ fontSize:"25px"}}>
+          <ul style={{ listStyle: "none", width:"90%"}}>
+          <b >
             Use Stack
-            </b>
+          </b>
             <li>
             Typescript
             </li>
@@ -116,22 +116,27 @@ function Home() {
               Git
             </li>
           </ul>
-          
           {currentUser != undefined ? currentUser.email :null}
         </Typography>
         { currentUser && 
         <>
-          <Profile /><Button disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button>
+          <Profile /><Button variant="contained" color="secondary" disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button>
         </>}
-
+        
         {/* <img src="/images/jangtaehwa.jpg"  style={{width: "200px", height: "100%", borderRadius: "15px"}}/> */}
-        <Typography gutterBottom>
-          <Link href="/next">회원가입하러가기</Link>
-        </Typography>
+       { !currentUser && <div>
         <Button variant="contained" color="secondary" onClick={handleClick}>
-          로그인
+          Log In
         </Button>
+        <Button variant="contained" color="secondary"><Link href="/next" style={{color: "white"}}>회원가입하러가기</Link></Button>
+        </div>
+        } 
+        {currentUser != undefined ?
+        <Typography variant="subtitle1" gutterBottom  style={{marginTop:"3px"}}>
+          <Button variant="contained" color="secondary" ><Link href="/chatting" style={{color: "white"}}>채팅하기</Link></Button>
+        </Typography> : null }
       </div>
+      
     </React.Fragment>
   );
 };

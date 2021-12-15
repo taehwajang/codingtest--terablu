@@ -7,11 +7,13 @@ import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
 const firebaseConfig = {
   apiKey: "AIzaSyBggmbr1rYd-2wO0gSKqFxg9QX5eOv5Big",
   authDomain: "project-test-7af73.firebaseapp.com",
+  databaseURL: "https://project-test-7af73-default-rtdb.firebaseio.com",
   projectId: "project-test-7af73",
   storageBucket: "project-test-7af73.appspot.com",
   messagingSenderId: "831204101439",
   appId: "1:831204101439:web:8705c0b06ae0a4dc4cd78a"
 };
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
@@ -35,18 +37,18 @@ export function useAuth(){
   }, [])
   return currentUser;
 }
-export async function upload(file, currentUser, setLoading){
+export async function upload(file, currentUser, setLoading) {
   const fileRef = ref(storage, currentUser.uid + '.png');
 
   setLoading(true);
-
-  const snapshot= await uploadBytes(fileRef, file);
-
+  
+  const snapshot = await uploadBytes(fileRef, file);
   const photoURL = await getDownloadURL(fileRef);
-  updateProfile(currentUser, {photoURL});
-
-  setLoading(false);
-  alert("uploaded file!");
+try{
+  await updateProfile(currentUser, {photoURL});
+}catch(e){
+  console.log(e);
 }
-
-
+  setLoading(false);
+  alert("Uploaded file!");
+}

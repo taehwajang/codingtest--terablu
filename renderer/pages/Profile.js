@@ -24,9 +24,11 @@ export default function Profile(){
     
     return (
         <div>
+          
             <input type="file"  onChange={handleChange}/><br />
             <Button disabled= { loading || !photo } 
             onClick={handleClick}>Upload</Button>
+          
             <img src={photoURL} 
             alt="Avatar" 
             style={{ verticalAlign:"middle", width:"80px", height:"80px", borderRadius:"50%", borderWidth:"5px", borderColor:"gray", borderStyle:"outset"}}/>

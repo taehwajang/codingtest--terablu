@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
+import { getFirestore, collection, getDocs, doc, setDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBggmbr1rYd-2wO0gSKqFxg9QX5eOv5Big",
@@ -18,7 +19,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const storage = getStorage();
+const db = getFirestore(app);
 
+export async function getData(collectionName){
+  const querySnapshot = await getDocs(collection(db, collectionName));
+  let userArr = [];
+  querySnapshot.forEach((doc) => {
+    let obj = {};
+    obj.nickName = doc.data().nickname;
+    obj.email = doc.data().email;
+    userArr.push(obj);
+  });
+  return userArr;
+}
+export async function userlistAdd(email, nickname){
+  await setDoc(doc(db, "userlist", email), {
+    email,
+    nickname
+  });
+}
 export function signup(email, password){
   return createUserWithEmailAndPassword(auth, email, password)
 }

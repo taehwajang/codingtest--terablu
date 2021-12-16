@@ -1,7 +1,5 @@
-import React,{ useRef, useState } from 'react';
-import Profile from './Profile';
-import { signup, login, logout, useAuth } from "./firebase";
-import Chatting from "./chatting"
+import React,{ useRef, useState, useEffect } from 'react';
+import { signup, login, logout, useAuth, getData } from "./firebase";
 import Head from 'next/head';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -23,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function Home() {
+  const [photoURL, setPhotoURL] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
   const classes = useStyles({});
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
@@ -31,7 +30,18 @@ function Home() {
   const currentUser = useAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [userArr, setUser] = useState([]);
 
+  useEffect(async () => {
+    if (currentUser?.photoURL) {
+      setPhotoURL(currentUser.photoURL);
+    }
+    if(currentUser != undefined){
+      let newArr = await getData('userlist');
+      let filterArr = await newArr.filter((item) => currentUser.email !== item.email);
+      await setUser([...filterArr]);
+    }
+}, [currentUser])
   async function handleSignup() {
     setLoading(true);
     try {
@@ -54,6 +64,7 @@ function Home() {
     setLoading(true);
     try {
       await logout();
+      await setPhotoURL('https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png');
     } catch {
       alert("Error!");
     }
@@ -75,15 +86,13 @@ function Home() {
               { 
               !currentUser && <>
               Email:<input ref ={emailRef} type="text" placeholder="Email"/><br/>
-              Password:<input ref ={passwordRef} type="password" placeholder="Password"/><br/>
-              <Button disabled={ loading  } onClick={handleSignup}>Sign Up</Button>
-              <Button disabled={ loading  } onClick={handleLogin}>Log In</Button>
+              Password:<input ref ={passwordRef} type="password" placeholder="Password"/>
+              <Button variant="contained" color="secondary"  disabled={ loading  } onClick={handleLogin}>Log In</Button>
               <div>
               <Button variant="contained"  onClick={handleClick}><Link href="/next">회원가입하러가기</Link></Button>
               </div>
               </>
               }
-
               </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -95,6 +104,9 @@ function Home() {
         <Typography variant="h4" gutterBottom>
           <b>Coding Test</b>
         </Typography>
+        {currentUser != undefined ? userArr.map((user, index) => (
+            <p>{index + 1} {user.nickName} <Button variant="contained" color="secondary" ><Link href="/chatting" style={{color: "white"}}>Chatting</Link></Button></p>
+          )) : null}
         <Typography variant="subtitle1" gutterBottom>
           <ul style={{ listStyle: "none", width:"90%"}}>
           <b >
@@ -118,23 +130,26 @@ function Home() {
           </ul>
           {currentUser != undefined ? currentUser.email :null}
         </Typography>
-        { currentUser && 
-        <>
-          <Profile /><Button variant="contained" color="secondary" disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button>
-        </>}
         
-        {/* <img src="/images/jangtaehwa.jpg"  style={{width: "200px", height: "100%", borderRadius: "15px"}}/> */}
+        
        { !currentUser && <div>
         <Button variant="contained" color="secondary" onClick={handleClick}>
           Log In
         </Button>
         <Button variant="contained" color="secondary"><Link href="/next" style={{color: "white"}}>회원가입하러가기</Link></Button>
         </div>
-        } 
+        } <br />
+        
         {currentUser != undefined ?
         <Typography variant="subtitle1" gutterBottom  style={{marginTop:"3px"}}>
-          <Button variant="contained" color="secondary" ><Link href="/chatting" style={{color: "white"}}>채팅하기</Link></Button>
+          <img src={photoURL} 
+            alt="Avatar" 
+            style={{ verticalAlign:"middle", width:"80px", height:"80px", borderRadius:"50%", borderWidth:"5px", borderColor:"gray", borderStyle:"outset"}}
+            />
+            <Button><Link href="avatar">Profile</Link></Button>
+          <Button variant="contained" color="secondary" disabled={ loading } onClick={handleLogout}>Log Out</Button>
         </Typography> : null }
+
       </div>
       
     </React.Fragment>

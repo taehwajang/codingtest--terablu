@@ -89,7 +89,7 @@ function Home() {
               Password:<input ref ={passwordRef} type="password" placeholder="Password"/>
               <Button variant="contained" color="secondary"  disabled={ loading  } onClick={handleLogin}>Log In</Button>
               <div>
-              <Button variant="contained"  onClick={handleClick}><Link href="/next">회원가입하러가기</Link></Button>
+              <Button variant="contained"  onClick={handleClick}><Link href="/next">Sign Up</Link></Button>
               </div>
               </>
               }
@@ -105,7 +105,9 @@ function Home() {
           <b>Coding Test</b>
         </Typography>
         {currentUser != undefined ? userArr.map((user, index) => (
-            <p>{index + 1} {user.nickName} <Button variant="contained" color="secondary" ><Link href="/chatting" style={{color: "white"}}>Chatting</Link></Button></p>
+            <p>{index + 1} {user.nickName} <Button variant="contained" color="secondary" >
+              <Link href="/chatting" style={{color: "white"}}>Chatting</Link>
+              </Button></p>
           )) : null}
         <Typography variant="subtitle1" gutterBottom>
           <ul style={{ listStyle: "none", width:"90%"}}>
@@ -132,13 +134,17 @@ function Home() {
         </Typography>
         
         
-       { !currentUser && <div>
+       { 
+       !currentUser && 
+       <div>
         <Button variant="contained" color="secondary" onClick={handleClick}>
           Log In
         </Button>
-        <Button variant="contained" color="secondary"><Link href="/next" style={{color: "white"}}>회원가입하러가기</Link></Button>
-        </div>
-        } <br />
+        <Button variant="contained" color="secondary">
+          <Link href="/next" style={{color: "white"}}>Sign Up</Link>
+          </Button>
+       </div> 
+        } 
         
         {currentUser != undefined ?
         <Typography variant="subtitle1" gutterBottom  style={{marginTop:"3px"}}>
@@ -147,9 +153,12 @@ function Home() {
             style={{ verticalAlign:"middle", width:"80px", height:"80px", borderRadius:"50%", borderWidth:"5px", borderColor:"gray", borderStyle:"outset"}}
             />
             <Button><Link href="avatar">Profile</Link></Button>
-          <Button variant="contained" color="secondary" disabled={ loading } onClick={handleLogout}>Log Out</Button>
+          <Button variant="contained" color="secondary" disabled={ loading } onClick={handleLogout}>Log Out</Button><br />
+          <Button variant="contained" color="secondary" disabled={ loading } onClick={handleLogout}>
+            <Link href="/friendsList" style={{color: "white"}}>친구 목록</Link>
+          </Button>
         </Typography> : null }
-
+        
       </div>
       
     </React.Fragment>

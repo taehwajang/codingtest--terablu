@@ -16,34 +16,37 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Chatting() {
+function FriendsList() {
   const [photoURL, setPhotoURL] = useState("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png");
   const currentUser = useAuth();
   const classes = useStyles({});
   const [userArr, setUser] = useState([]);
 
 
-
   useEffect(() => {
     if (currentUser?.photoURL) {
       setPhotoURL(currentUser.photoURL);
     }
+    if(currentUser != undefined){
+      let newArr =  getData('userlist');
+      let filterArr = newArr.filter((item) => currentUser.email !== item.email);
+       setUser([...filterArr]);
+    }
 }, [currentUser])
-
   return (
     <React.Fragment>
     <Head>
-      <title>chatting - Nextron </title>
+      <title>friendsList - Nextron </title>
     </Head>
     <div className={classes.root}>
       <Typography variant="h4" gutterBottom>
-        <b>채팅하기</b>
+        <b>친구 목록</b>
       </Typography>
-      {currentUser != undefined ? <div>환영합니다.{currentUser.email}님  <br />      
-      <img src={photoURL} 
-            alt="Avatar" 
-            style={{ verticalAlign:"middle", width:"80px", height:"80px", borderRadius:"50%", borderWidth:"5px", borderColor:"gray", borderStyle:"outset"}}
-            /></div> : null }
+        <div>환영합니다.~~~~~~~~`</div> 
+        {userArr.map((user, index) => (
+            <p>{index + 1} {user.nickName} <Button variant="contained" color="secondary" ><Link href="/chatting" style={{color: "white"}}>Chatting</Link></Button></p>
+          ))}
+      
       <Typography gutterBottom>
         <Link href="/home">Go to the home page</Link>
       </Typography>
@@ -54,4 +57,4 @@ function Chatting() {
   );
 };
 
-export default Chatting;
+export default FriendsList;

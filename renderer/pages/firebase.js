@@ -33,7 +33,7 @@ export async function getData(collectionName){
   return userArr;
 }
 export async function userlistAdd(email, nickname){
-  await setDoc(doc(db, "userlist", email), {
+  await setDoc(doc(db, "userlist", nickname), {
     email,
     nickname
   });

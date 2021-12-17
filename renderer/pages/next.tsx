@@ -36,8 +36,7 @@ function Next() {
   async function handleSignup() {
     setLoading(true);
     try {
-      await signup(emailRef.current.value, passwordRef.current.value);
-      await userlistAdd(emailRef.current.value, nickNameRef.current.value);
+      await signup(emailRef.current.value, passwordRef.current.value, nickNameRef.current.value);
     } catch {
       alert("Error!");
     }
@@ -53,21 +52,23 @@ function Next() {
         <Typography variant="h4" gutterBottom>
           회원가입
         </Typography>
-        <Typography variant="subtitle1" gutterBottom>
-          <form action="">
-          Email:<input ref ={emailRef} type="text" placeholder="Email"/><br/>
-          NickName:<input ref ={nickNameRef} type="text" placeholder="NickName"/><br/>
-          Password:<input ref ={passwordRef} type="password" placeholder="Password"/><br/>
-          </form>
-        </Typography>
-        <Typography gutterBottom>
+
+        {currentUser != undefined ?
+         <div><b>Currently logged in as : {currentUser.email}</b><br />
+            <Button variant="contained" color="secondary" disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button></div> 
+            :
+             <form action="">
+                Email:<input ref ={emailRef} type="text" placeholder="Email"/><br/>
+                NickName:<input ref ={nickNameRef} type="text" placeholder="NickName"/><br/>
+                Password:<input ref ={passwordRef} type="password" placeholder="Password"/><br/>
+                <Button variant="contained" color="primary" onClick={handleSignup}>
+                  Sign Up
+              </Button>
+            </form>
+        }
+          <Typography gutterBottom>
           <Link href="/home">Go to the home page</Link>
         </Typography>
-        <Button variant="contained" color="primary" onClick={handleSignup}>
-          가입하기
-        </Button>
-        {currentUser != undefined ? <div>Currently logged in as : {currentUser.email}
-            <Button variant="contained" color="secondary" disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button></div> : null}
       </div>
     </React.Fragment>
   );

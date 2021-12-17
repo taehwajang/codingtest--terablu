@@ -104,11 +104,6 @@ function Home() {
         <Typography variant="h4" gutterBottom>
           <b>Coding Test</b>
         </Typography>
-        {currentUser != undefined ? userArr.map((user, index) => (
-            <p>{index + 1} {user.nickName} <Button variant="contained" color="secondary" >
-              <Link href="/chatting" style={{color: "white"}}>Chatting</Link>
-              </Button></p>
-          )) : null}
         <Typography variant="subtitle1" gutterBottom>
           <ul style={{ listStyle: "none", width:"90%"}}>
           <b >
@@ -154,7 +149,7 @@ function Home() {
             />
             <Button><Link href="avatar">Profile</Link></Button>
           <Button variant="contained" color="secondary" disabled={ loading } onClick={handleLogout}>Log Out</Button><br />
-          <Button variant="contained" color="secondary" disabled={ loading } onClick={handleLogout}>
+          <Button variant="contained" color="secondary" disabled={ loading }>
             <Link href="/friendsList" style={{color: "white"}}>친구 목록</Link>
           </Button>
         </Typography> : null }

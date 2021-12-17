@@ -86,9 +86,9 @@ function Home() {
               { 
               !currentUser && <>
               Email:<input ref ={emailRef} type="text" placeholder="Email"/><br/>
-              Password:<input ref ={passwordRef} type="password" placeholder="Password"/>
-              <Button variant="contained" color="secondary"  disabled={ loading  } onClick={handleLogin}>Log In</Button>
+              Password:<input ref ={passwordRef} type="password" placeholder="Password"/><br />
               <div>
+              <Button style={{marginRight:"5px"}} variant="contained" color="secondary"  disabled={ loading  } onClick={handleLogin}>Log In</Button>
               <Button variant="contained"  onClick={handleClick}><Link href="/next">Sign Up</Link></Button>
               </div>
               </>
@@ -132,7 +132,7 @@ function Home() {
        { 
        !currentUser && 
        <div>
-        <Button variant="contained" color="secondary" onClick={handleClick}>
+        <Button style={{marginRight:"5px"}} variant="contained" color="secondary" onClick={handleClick}>
           Log In
         </Button>
         <Button variant="contained" color="secondary">
@@ -146,10 +146,10 @@ function Home() {
           <img src={photoURL} 
             alt="Avatar" 
             style={{ verticalAlign:"middle", width:"80px", height:"80px", borderRadius:"50%", borderWidth:"5px", borderColor:"gray", borderStyle:"outset"}}
-            />
-            <Button><Link href="avatar">Profile</Link></Button>
+            /><br />
+            <Button><Link href="avatar">Profile</Link></Button><br />
           <Button variant="contained" color="secondary" disabled={ loading } onClick={handleLogout}>Log Out</Button><br />
-          <Button variant="contained" color="secondary" disabled={ loading }>
+          <Button style={{marginTop:"5px"}} variant="contained" color="secondary" disabled={ loading }>
             <Link href="/friendsList" style={{color: "white"}}>친구 목록</Link>
           </Button>
         </Typography> : null }

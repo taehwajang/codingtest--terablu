@@ -58,10 +58,10 @@ function Next() {
             <Button variant="contained" color="secondary" disabled={ loading || !currentUser  } onClick={handleLogout}>Log Out</Button></div> 
             :
              <form action="">
-                Email:<input ref ={emailRef} type="text" placeholder="Email"/><br/>
+                E-mail:<input ref ={emailRef} type="text" placeholder="Email"/><br/>
                 NickName:<input ref ={nickNameRef} type="text" placeholder="NickName"/><br/>
                 Password:<input ref ={passwordRef} type="password" placeholder="Password"/><br/>
-                <Button variant="contained" color="primary" onClick={handleSignup}>
+                <Button style={{marginTop:"5px"}} variant="contained" color="primary" onClick={handleSignup}>
                   Sign Up
               </Button>
             </form>

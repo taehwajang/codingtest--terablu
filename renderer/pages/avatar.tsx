@@ -2,6 +2,7 @@ import React,{ useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import Link from '../components/Link';
 import { signup, useAuth, logout ,upload} from "./firebase";
@@ -49,10 +50,10 @@ useEffect(() => {
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
         <div>
-          <input type="file"  onChange={handleChange}/><br />
+          <Input type="file"  onChange={handleChange}/><br />
           <Button disabled= { loading || !photo } 
           onClick={handleClick}>Upload</Button>
-        
+        <br />
           <img src={photoURL} 
           alt="Avatar" 
           style={{ verticalAlign:"middle", width:"80px", height:"80px", borderRadius:"50%", borderWidth:"5px", borderColor:"gray", borderStyle:"outset"}}/>

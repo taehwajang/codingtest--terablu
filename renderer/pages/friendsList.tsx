@@ -2,7 +2,6 @@ import React ,{ useState, useEffect  }from 'react';
 import Head from 'next/head';
 import { Theme, makeStyles, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Link from '../components/Link';
 import { useAuth, getData  } from "./firebase";
 

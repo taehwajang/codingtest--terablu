@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import Link from '../components/Link';
-import { signup, useAuth, logout ,upload} from "./firebase";
+import {  useAuth, upload} from "./firebase";
 
 
 const useStyles = makeStyles((theme: Theme) =>
